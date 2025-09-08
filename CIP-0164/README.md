@@ -1661,6 +1661,7 @@ $$
 $$
 
 **_Voting failure:_** An unlucky set of VRF evaluations might result in
+<!-- Seems to be using terminology ("pipeline") of the (concurrent) _Research Leios_ -->
 insufficient voters being selected in a given pipeline, thus making it
 impossible to certify an EB in that pipeline.
 
@@ -1966,6 +1967,7 @@ Because of the noisiness in the raw mainnet data, these estimates are uncertain.
   - Linear model that accounts for Plutus:
     `(347.8 μs) + (19.43 μs/kB) * (size of the block) + (21.27 μs/Gstep) * (billions of Plutus execution steps)`
 
+<!-- Definition of (re)apply, might be linked from above -->
 The Leios simulators perform the "apply" operation when a transaction is first
 seen, either when it is received for the memory pool or when it is fetched after
 first being seen in an RB or EB; they perform the "reapply" operation when a
@@ -1973,8 +1975,9 @@ block is being generated or validated. A more nuanced model of CPU usage in the
 simulators would account for Plutus execution explicitly, but the linear models
 described above are used to account for Plutus workloads implicitly. The
 following plot of simulation results limit each node to 4 vCPU cores and suggest
-that workloads of 20,000e9 Plutus execution steps per EB may be feasible: this
-is 1000 times the current Cardano mainnet limit of 20e9 steps for Praos blocks.
+<!-- Either use scientific notation like this, or a more explicit $20\cdot 10^{12}$ -->
+that workloads of 2e13 Plutus execution steps per EB may be feasible: this
+is 1000 times the current Cardano mainnet limit of 2e10 steps for Praos blocks.
 The subsequent plot shows the 4 vCPUs becoming progressively more saturated with
 heavier Plutus execution. Although these results suggest that Leios'
 _block-level_ Plutus budget can safely be 5000 billion steps or more, it is
@@ -2012,6 +2015,8 @@ upgrade will not be needed, as 10 Mb/s is well below the bandwidth of standard
 network connections. At throughput much higher than 200 kB/s, network egress can
 become a significant cost for nodes hosted on some cloud-computing providers.
 The Leios simulations do not model memory or disk. With the advent of
+<!-- Should the next link point to -->
+<!-- https://ouroboros-consensus.cardano.intersectmbo.org/docs/references/miscellaneous/utxo-hd/ ? -->
 [UTxO-HD][utxohd], 16 GB of memory will remain be sufficient for Leios if the
 `OnDisk` option is used for the UTxO set. Disk requirements depend upon the
 growth of the ledger, but a sustained 0.150 MB/s throughput amounts to ledger
@@ -2023,6 +2028,7 @@ for further discussion.
 **Parameter Relationships and Network Assumptions**
 
 The key relation in the proposed protocol is between the voting threshold
+<!-- The percent sign below does not render on GitHub -->
 ($\tau = 75\%$) and propagation delay of EBs ($\Delta_\text{EB}$). The high
 voting threshold ensures that any certified EB is already known to at least 25%
 of honest nodes by the end of $L_\text{vote}$, even assuming 50% adversarial
@@ -2150,6 +2156,7 @@ number of voters increases, so larger committee sizes might be permitted for
 broader SPO participation and higher security. The committee size should be
 large enough that fluctuations in committee membership do not create an
 appreciable probability of an adversarial quorum when the adversarial stake is
+<!-- "just large enough above 50%"? -->
 just under 50%. The quorum size should be kept large enough above 50% so that
 those same fluctuations do not prevent an honest quorum. Larger committees
 require more network traffic, of course.
@@ -2202,6 +2209,7 @@ listed in the table.
 
 </div>
 
+<!-- Shouldn't the next one be part of the motivation? -->
 _Required TPS for Current Reward Maintenance:_ To maintain current reward levels
 (~48 million ADA monthly) through transaction fees as the Reserve depletes.
 
