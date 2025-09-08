@@ -312,6 +312,7 @@ The RB chain continues to be distributed exactly as in Praos, while Leios
 introduces separate distribution mechanisms for EB headers (for rapid discovery
 and <a id="equivocation" href="#equivocation-detection">equivocation
 detection</a>), EB bodies, and their referenced transactions.
+<!-- Short explanation of equivocation/conflicting EBs? -->
 
 Due to the voting overhead per EB, EBs should only be announced if a transaction
 cannot be included in the base RB. Empty EBs should not be announced in the
@@ -416,6 +417,7 @@ network characteristics below and timing constraints, and size/resource
 parameters that manage throughput.
 
 The certificate inclusion process (Steps 3-5) involves three timing constraints
+<!-- To what "Steps" do this refer to? -->
 that work together to maintain Praos' security assumptions while enabling
 higher throughput. These constraints prevent scenarios where honest nodes would
 be forced to delay chain adoption due to missing data.
@@ -728,6 +730,7 @@ as shown in the [BLS certificates specification][bls-spec].
 
 <a id="vote-structure" href="#vote-structure"></a>**Vote Structure**: All votes
 include the `endorser_block_hash` field that uniquely identifies the target EB:
+<!-- Another name for the field? `announced_eb`? -->
 
 - **Persistent votes**:
   - `election_id`: Identifier for the voting round (derived from the slot number
@@ -844,6 +847,7 @@ reuse, with detailed processing rules specified in the
 When a stake pool wins slot leadership (step 1), they create a Ranking Block
 (RB) and **optionally** an Endorser Block (EB) based on the
 [chain inclusion rules](#step-5-chain-inclusion). The RB is a standard Praos
+<!-- Seems to be stating a complete definition, while it isn't -->
 block with extended header fields to reference one EB and announce another EB
 when such is created. The optional EB is a larger block containing references to
 additional transactions. The RB chain continues to be distributed exactly as in
@@ -873,6 +877,7 @@ and Adoption**: Nodes validate the RB and any included EB certificate before
 adopting the block (step 4). This includes cryptographic verification of
 certificates and ensuring they correspond to properly announced EBs. The
 complete validation procedure is detailed in
+<!-- It is confusing to refer to both series elements as "steps" -->
 [Step 5: Chain Inclusion](#step-5-chain-inclusion). The node serves RBs to
 downstream peers using standard Praos block distribution mechanisms (step 5),
 which are permitted to include diffusion pipelining with delayed validation.
@@ -894,6 +899,7 @@ chain. This ensures that when a node switches to a different fork due to the
 longest-chain rule, it can immediately validate the new chain without additional
 EB propagation delays. However, nodes do not need to fetch EBs from forks that
 have diverged from the locally preferred chain older than the Praos security
+<!-- Meaning, 2160 blocks old? -->
 parameter, as such forks cannot affect chain selection decisions. EBs are
 forwarded before complete validity checks are performed.
 
@@ -1001,7 +1007,8 @@ Nodes complete this computation well before voting begins in the new epoch to
 ensure seamless participation.
 
 #### Operational certificate issue numbers
-
+<!-- I do not understand the elements at play here. Moreover, this long discussion -->
+<!-- seems to belong to the first part of the CIP. -->
 Each node must relay at most two EB announcements that equivocate the same Praos
 election. This would be trivial for senders and receivers to enforce, if it were
 not for
@@ -1191,7 +1198,7 @@ mini-protocol running independently for each such peer, with the node as the
 client in one and the server in the other. Recall that Cardano's topology
 results in each relay having many more downstream peers than upstream peers.
 Syncing peers will be discussed below.
-
+<!-- Suggest: Agency color at background -->
 <div align="center">
 <a name="figure-6" id="figure-6"></a>
 
@@ -1347,6 +1354,7 @@ This mini-protocol pair satisfies the above requirements in the following ways.
 - If MsgLeiosBlockRequest and MsgLeiosBlockTxsRequest were restricted to young
   EBs, then MsgLeiosBlockRangeRequest would not only enable syncing nodes but
   also the unfortunate node that suffers from a $\Delta^\text{A}_\text{EB}$
+  <!-- What is that -->
   violation. The protocol design requires that that event is rare or at least
   confined to a small portion of honest stake at a time. But it will
   occasionally happen to some honest nodes, and they must be able to recover
@@ -1545,6 +1553,7 @@ Additionally, Praos blocks larger than approximately 3 MB would pose security
 risks by increasing the frequency of short forks that adversaries could exploit
 to compromise the common prefix property and enable attacks such as
 double-spending. Nonetheless, improved Praos block times would be an improvement
+<!-- Badly placed link? -->
 also benefiting [Leios](#alternatives--extensions).
 
 <a name="competitiveness"></a>**4. Competitive positioning**
