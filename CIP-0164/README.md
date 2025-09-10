@@ -1207,8 +1207,9 @@ Syncing peers will be discussed below.
 title: LeiosNotify
 ---
 graph LR
-   style StIdle color:green;
-   style StBusy color:blue;
+   style StIdle fill:PaleGreen,stroke:DarkGreen;
+   style StBusy fill:PowderBlue,stroke:DarkBlue;
+   style StDone fill:SeaShell,stroke:DimGray;
 
    StIdle -->|MsgLeiosNotificationRequestNext| StBusy
    StBusy -->|MsgLeiosBlockAnnouncement| StIdle
