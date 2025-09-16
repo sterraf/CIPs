@@ -730,7 +730,7 @@ as shown in the [BLS certificates specification][bls-spec].
 
 <a id="vote-structure" href="#vote-structure"></a>**Vote Structure**: All votes
 include the `endorser_block_hash` field that uniquely identifies the target EB:
-<!-- Another name for the field? `announced_eb`? -->
+<!-- Another name for the field? `ranking_block_hash`? -->
 
 - **Persistent votes**:
   - `election_id`: Identifier for the voting round (derived from the slot number
@@ -847,7 +847,6 @@ reuse, with detailed processing rules specified in the
 When a stake pool wins slot leadership (step 1), they create a Ranking Block
 (RB) and **optionally** an Endorser Block (EB) based on the
 [chain inclusion rules](#step-5-chain-inclusion). The RB is a standard Praos
-<!-- Seems to be stating a complete definition, while it isn't -->
 block with extended header fields to reference one EB and announce another EB
 when such is created. The optional EB is a larger block containing references to
 additional transactions. The RB chain continues to be distributed exactly as in
@@ -1355,7 +1354,6 @@ This mini-protocol pair satisfies the above requirements in the following ways.
 - If MsgLeiosBlockRequest and MsgLeiosBlockTxsRequest were restricted to young
   EBs, then MsgLeiosBlockRangeRequest would not only enable syncing nodes but
   also the unfortunate node that suffers from a $\Delta^\text{A}_\text{EB}$
-  <!-- What is that -->
   violation. The protocol design requires that that event is rare or at least
   confined to a small portion of honest stake at a time. But it will
   occasionally happen to some honest nodes, and they must be able to recover
@@ -1662,7 +1660,6 @@ $$
 $$
 
 **_Voting failure:_** An unlucky set of VRF evaluations might result in
-<!-- Seems to be using terminology ("pipeline") of the (concurrent) _Research Leios_ -->
 insufficient voters being selected in a given pipeline, thus making it
 impossible to certify an EB in that pipeline.
 
@@ -1976,9 +1973,8 @@ block is being generated or validated. A more nuanced model of CPU usage in the
 simulators would account for Plutus execution explicitly, but the linear models
 described above are used to account for Plutus workloads implicitly. The
 following plot of simulation results limit each node to 4 vCPU cores and suggest
-<!-- Either use scientific notation like this, or a more explicit $20\cdot 10^{12}$ -->
-that workloads of 2e13 Plutus execution steps per EB may be feasible: this
-is 1000 times the current Cardano mainnet limit of 2e10 steps for Praos blocks.
+that workloads of 20,000e9 Plutus execution steps per EB may be feasible: this
+is 1000 times the current Cardano mainnet limit of 20e9 steps for Praos blocks.
 The subsequent plot shows the 4 vCPUs becoming progressively more saturated with
 heavier Plutus execution. Although these results suggest that Leios'
 _block-level_ Plutus budget can safely be 5000 billion steps or more, it is
@@ -2016,8 +2012,6 @@ upgrade will not be needed, as 10 Mb/s is well below the bandwidth of standard
 network connections. At throughput much higher than 200 kB/s, network egress can
 become a significant cost for nodes hosted on some cloud-computing providers.
 The Leios simulations do not model memory or disk. With the advent of
-<!-- Should the next link point to -->
-<!-- https://ouroboros-consensus.cardano.intersectmbo.org/docs/references/miscellaneous/utxo-hd/ ? -->
 [UTxO-HD][utxohd], 16 GB of memory will remain be sufficient for Leios if the
 `OnDisk` option is used for the UTxO set. Disk requirements depend upon the
 growth of the ledger, but a sustained 0.150 MB/s throughput amounts to ledger
@@ -2029,7 +2023,6 @@ for further discussion.
 **Parameter Relationships and Network Assumptions**
 
 The key relation in the proposed protocol is between the voting threshold
-<!-- The percent sign below does not render on GitHub -->
 ($\tau = 75\%$) and propagation delay of EBs ($\Delta_\text{EB}$). The high
 voting threshold ensures that any certified EB is already known to at least 25%
 of honest nodes by the end of $L_\text{vote}$, even assuming 50% adversarial
@@ -2157,7 +2150,6 @@ number of voters increases, so larger committee sizes might be permitted for
 broader SPO participation and higher security. The committee size should be
 large enough that fluctuations in committee membership do not create an
 appreciable probability of an adversarial quorum when the adversarial stake is
-<!-- "just large enough above 50%"? -->
 just under 50%. The quorum size should be kept large enough above 50% so that
 those same fluctuations do not prevent an honest quorum. Larger committees
 require more network traffic, of course.
